@@ -9,7 +9,7 @@ import javax.swing.Timer;
 @SuppressWarnings("serial")
 public class Field extends JPanel {
 
-    private Double friction = 0.1;
+    private Double friction = 0.;
     // Флаг приостановленности движения
     private boolean paused;
     // Динамический список скачущих мячей

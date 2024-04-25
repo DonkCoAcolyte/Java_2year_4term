@@ -113,15 +113,16 @@ public class BouncingBall implements Runnable {
     }
 
     private void accountForFriction(){
+        if (field.getFriction() == 0.) return;
         Double curSpeed = sqrt(speedX*speedX + speedY*speedY);
+        Double sinAngle = speedY/curSpeed;
+        Double cosAngle = speedX/curSpeed;
+        curSpeed = curSpeed - field.getFriction();
         if (curSpeed <= 0.1) {
             speedX = 0.;
             speedY = 0.;
             return;
         }
-        Double sinAngle = speedY/curSpeed;
-        Double cosAngle = speedX/curSpeed;
-        curSpeed = curSpeed - field.getFriction();
         speedX = curSpeed * cosAngle;
         speedY = curSpeed * sinAngle;
     }

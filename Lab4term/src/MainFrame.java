@@ -1,12 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
     // Константы, задающие размер окна приложения, если оно
@@ -15,6 +12,10 @@ public class MainFrame extends JFrame {
     private static final int HEIGHT = 500;
     private JMenuItem pauseMenuItem;
     private JMenuItem resumeMenuItem;
+
+    private JMenuItem frictionMenuItem;
+
+    private JTextField textFieldFriction;
     // Поле, по которому прыгают мячи
     private Field field = new Field();
 
@@ -32,6 +33,7 @@ public class MainFrame extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
         JMenu ballMenu = new JMenu("Мячи");
+        JMenu frictionMenu = new JMenu ("Трение");
         Action addBallAction = new AbstractAction("Добавить мяч") {
             public void actionPerformed(ActionEvent event) {
                 field.addBall();
@@ -67,6 +69,31 @@ public class MainFrame extends JFrame {
         resumeMenuItem.setEnabled(false);
 // Добавить в центр граничной компоновки поле Field
         getContentPane().add(field, BorderLayout.CENTER);
+
+        JLabel frictionLabel = new JLabel("friction: ");
+        textFieldFriction = new JTextField("0", 3);
+        textFieldFriction.setMaximumSize(textFieldFriction.getPreferredSize());
+        Box hboxFriction = Box.createHorizontalBox();
+        hboxFriction.add(frictionLabel);
+        hboxFriction.add(textFieldFriction);
+        // button
+        JButton buttonSetFriction = new JButton("Выставить коэфф трения");
+        buttonSetFriction.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                try {
+                    field.setFriction(Double.parseDouble(textFieldFriction.getText()));
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(MainFrame.this,
+                            "Ошибка в формате записи числа с плавающей точкой", "Ошибочный формат числа",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        hboxFriction.add(buttonSetFriction);
+
+        menuBar.add(frictionMenu);
+        frictionMenu.add(hboxFriction);
+
     }
 
     // Главный метод приложения
