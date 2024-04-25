@@ -37,8 +37,8 @@ public class BouncingBall implements Runnable {
 // угол в пределах от 0 до 2PI
         double angle = Math.random()*2*Math.PI;
 // Вычисляются горизонтальная и вертикальная компоненты скорости
-        speedX = 3*Math.cos(angle);
-        speedY = 3*Math.sin(angle);
+        speedX = speed*Math.cos(angle);
+        speedY = speed*Math.sin(angle);
 // Цвет мяча выбирается случайно
         color = new Color((float)Math.random(), (float)Math.random(),
                 (float)Math.random());
@@ -91,7 +91,7 @@ public class BouncingBall implements Runnable {
 // исходя из скорости
 // Скорость = 1 (медленно), засыпаем на 15 мс.
 // Скорость = 15 (быстро), засыпаем на 1 мс.
-                Thread.sleep(16-speed);
+                Thread.sleep(10);
             }
         } catch (InterruptedException ex) {
 // Если нас прервали, то ничего не делаем
