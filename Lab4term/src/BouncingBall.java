@@ -1,6 +1,9 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+
+import static java.lang.Math.sqrt;
+
 public class BouncingBall implements Runnable {
     // Максимальный радиус, который может иметь мяч
     private static final int MAX_RADIUS = 40;
@@ -16,8 +19,8 @@ public class BouncingBall implements Runnable {
     private double y;
     // Вертикальная и горизонтальная компонента скорости
     private int speed;
-    private double speedX;
-    private double speedY;
+    private Double speedX;
+    private Double speedY;
     // Конструктор класса BouncingBall
     public BouncingBall(Field field) {
 // Необходимо иметь ссылку на поле, по которому прыгает мяч,
@@ -63,6 +66,7 @@ public class BouncingBall implements Runnable {
 // возвращено в метод
 // В противном случае - активный поток заснѐт
                 field.canMove(this);
+                accountForFriction();
                 if (x + speedX <= radius) {
 // Достигли левой стенки, отскакиваем право
                     speedX = -speedX;
@@ -106,5 +110,19 @@ public class BouncingBall implements Runnable {
                 2*radius, 2*radius);
         canvas.draw(ball);
         canvas.fill(ball);
+    }
+
+    private void accountForFriction(){
+        Double curSpeed = sqrt(speedX*speedX + speedY*speedY);
+        if (curSpeed <= 0.1) {
+            speedX = 0.;
+            speedY = 0.;
+            return;
+        }
+        Double sinAngle = speedY/curSpeed;
+        Double cosAngle = speedX/curSpeed;
+        curSpeed = curSpeed - field.getFriction();
+        speedX = curSpeed * cosAngle;
+        speedY = curSpeed * sinAngle;
     }
 }
