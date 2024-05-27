@@ -22,6 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.GroupLayout.Alignment;
 @SuppressWarnings("serial")
+
+
+//TODO replace textAreaIncoming with a JEditorPane
 public class MainFrame extends JFrame {
     private static final String FRAME_TITLE = "Клиент мгновенных сообщений";
     private static final int FRAME_MINIMUM_WIDTH = 500;
@@ -33,9 +36,10 @@ public class MainFrame extends JFrame {
     private static final int SMALL_GAP = 5;
     private static final int MEDIUM_GAP = 10;
     private static final int LARGE_GAP = 15;
-    private static final int SERVER_PORT = 4567;
+    private static final int SERVER_PORT = 4568;
     private final JTextField textFieldFrom;
     private final JTextField textFieldTo;
+
     private final JTextArea textAreaIncoming;
     private final JTextArea textAreaOutgoing;
 
@@ -139,14 +143,10 @@ public class MainFrame extends JFrame {
                         socket.close();
 // Выделяем IP-адрес
                         final String address =
-                                ((InetSocketAddress) socket
-                                        .getRemoteSocketAddress())
-                                        .getAddress()
-                                        .getHostAddress();
+                                ((InetSocketAddress) socket.getRemoteSocketAddress())
+                                        .getAddress().getHostAddress();
 // Выводим сообщение в текстовую область
-                        textAreaIncoming.append(senderName +
-                                " (" + address + "): " +
-                                message + "\n");
+                        textAreaIncoming.append(senderName + " (" + address + "): " + message + "\n");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -177,6 +177,17 @@ public class MainFrame extends JFrame {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            String AddressParams[] = destinationAddress.split(":", 2);
+            String Ip = AddressParams[0];
+            Integer Port;
+            if (AddressParams.length < 2) {
+                Port = SERVER_PORT;
+            } else{
+                Port = Integer.parseInt(AddressParams[1]);
+            }
+
+
+
             if (message.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
                         "Введите текст сообщения", "Ошибка",
@@ -185,7 +196,7 @@ public class MainFrame extends JFrame {
             }
 // Создаем сокет для соединения
             final Socket socket =
-                    new Socket(destinationAddress, SERVER_PORT);
+                    new Socket(Ip, Port);
 // Открываем поток вывода данных
             final DataOutputStream out =
                     new DataOutputStream(socket.getOutputStream());
