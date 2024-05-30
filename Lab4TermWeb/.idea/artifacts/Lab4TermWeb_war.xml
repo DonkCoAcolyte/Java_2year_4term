@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Lab4TermWeb:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>Lab4TermWeb</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="Lab4TermWeb-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Lab4TermWeb:war exploded" />
+    </root>
+  </artifact>
+</component>
