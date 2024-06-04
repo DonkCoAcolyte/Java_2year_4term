@@ -1,15 +1,15 @@
-public class user {
+public class User {
     private final String login;
     private String password;
 
     private String sessionId;
-    private userData data;
+    private UserData data;
 
-    public user(String givenLogin, String givenPassword, String givenSessionId){
+    public User(String givenLogin, String givenPassword, String givenSessionId){
         login = givenLogin;
         password = givenPassword;
         sessionId = givenSessionId;
-        data = new userData();
+        data = new UserData();
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -26,7 +26,7 @@ public class user {
         return sessionId;
     }
 
-    public userData getData() {
+    public UserData getData() {
         return data;
     }
 
@@ -35,7 +35,7 @@ public class user {
     public void setSessionId(String givenSessionId){
         this.sessionId = givenSessionId;
     }
-    public void setData(userData data) {
+    public void setData(UserData data) {
         this.data = data;
     }
 }

@@ -1,11 +1,11 @@
-public class userData {
+public class UserData {
     private Integer chosenNumber;
 
-    public userData(){
+    public UserData(){
         chosenNumber = 0;
     }
 
-    public userData(Integer number){
+    public UserData(Integer number){
         chosenNumber = number;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
